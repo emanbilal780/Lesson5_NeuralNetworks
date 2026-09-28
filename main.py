@@ -15,13 +15,16 @@ model = models.Sequential([
     layers.Dense(10, activation='softmax')
 ])
 
-# Compile the model
 model.compile(optimizer='adam',
     loss='sparse_categorical_crossentropy',
     metrics=['accuracy'])
 
-# Train the model
-model.fit(x_train, y_train, epochs=5)
+
+history = model.fit(x_train, y_train, epochs=10, validation_split=0.1)
+
+plt.plot(history.history['accuracy'], label='train')
+plt.plot(history.history['val_accuracy'], label='val')
+plt.xlabel('Epoch'); plt.ylabel('Accuracy'); plt.legend(); plt.show()
 
 # Evaluate the model
 test_loss, test_acc = model.evaluate(x_test, y_test)
